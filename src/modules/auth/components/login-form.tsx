@@ -6,21 +6,23 @@ import { ThemedView } from '@/components/themed-view';
 import { Button } from '@/components/ui/button';
 import { TextField } from '@/components/ui/text-field';
 import { Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
 
 import { useLogin } from '../hooks/use-login';
 import type { AuthSession } from '../types';
+import { FormBanner } from './form-banner';
+import { PasswordToggle } from './password-toggle';
 
 type LoginFormProps = {
+  initialEmail?: string;
+  notice?: string;
   onSuccess?: (session: AuthSession) => void;
 };
 
-export function LoginForm({ onSuccess }: LoginFormProps) {
-  const theme = useTheme();
+export function LoginForm({ initialEmail = '', notice, onSuccess }: LoginFormProps) {
   const passwordRef = useRef<TextInput>(null);
   const { submit, submitting, fieldErrors, formError, clearFieldError } = useLogin({ onSuccess });
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,11 +31,9 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   return (
     <ThemedView style={styles.form}>
       {formError ? (
-        <ThemedView style={[styles.banner, { borderColor: theme.danger }]} accessibilityRole="alert">
-          <ThemedText type="small" themeColor="danger">
-            {formError}
-          </ThemedText>
-        </ThemedView>
+        <FormBanner message={formError} />
+      ) : notice ? (
+        <FormBanner message={notice} tone="success" />
       ) : null}
 
       <TextField
@@ -72,15 +72,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
         returnKeyType="go"
         onSubmitEditing={handleSubmit}
         right={
-          <Pressable
-            onPress={() => setShowPassword((value) => !value)}
-            hitSlop={Spacing.two}
-            accessibilityRole="button"
-            accessibilityLabel={showPassword ? 'Hide password' : 'Show password'}>
-            <ThemedText type="smallBold" themeColor="primary">
-              {showPassword ? 'Hide' : 'Show'}
-            </ThemedText>
-          </Pressable>
+          <PasswordToggle visible={showPassword} onToggle={() => setShowPassword((v) => !v)} />
         }
       />
 
@@ -102,11 +94,6 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 const styles = StyleSheet.create({
   form: {
     gap: Spacing.three,
-  },
-  banner: {
-    borderWidth: 1,
-    borderRadius: Spacing.three,
-    padding: Spacing.three,
   },
   forgot: {
     alignSelf: 'flex-end',

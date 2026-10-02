@@ -7,15 +7,15 @@ src/
 ├── app/                 # Expo Router routes only — thin files that render a module's screen
 │   ├── _layout.tsx      # Root Stack
 │   ├── (tabs)/          # Tab navigator (Home, Explore)
-│   └── (auth)/          # Auth routes (login.tsx -> LoginScreen from @/modules/auth)
+│   └── (auth)/          # Auth routes: login.tsx, signup.tsx (render screens from @/modules/auth)
 │
 ├── modules/             # Feature modules — each one is self-contained
 │   └── auth/
-│       ├── components/  # UI used only by this module (LoginForm)
-│       ├── hooks/       # Module hooks (useLogin)
-│       ├── screens/     # Full screens rendered by routes (LoginScreen)
-│       ├── services/    # API calls for this module (auth-service)
-│       ├── utils/       # Module-only helpers (validate-login)
+│       ├── components/  # UI used only by this module (LoginForm, SignupForm, AuthLayout)
+│       ├── hooks/       # Module hooks (useLogin, useSignup)
+│       ├── screens/     # Full screens rendered by routes (LoginScreen, SignupScreen)
+│       ├── services/    # API calls for this module (auth-service: accounts + session in secure storage)
+│       ├── utils/       # Module-only helpers (validate-login, validate-signup)
 │       ├── types.ts     # Module types
 │       └── index.ts     # Public API — the only file other code should import from
 │
@@ -23,7 +23,7 @@ src/
 ├── constants/           # Theme, config
 ├── context/             # Global providers (AppProvider)
 ├── hooks/               # Shared hooks
-├── services/            # Shared infrastructure (api-client)
+├── services/            # Shared infrastructure (api-client, secure-storage)
 ├── types/               # Shared types
 └── utils/               # Shared pure helpers
 ```

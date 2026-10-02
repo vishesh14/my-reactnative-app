@@ -20,11 +20,11 @@ export function useLogin({ onSuccess }: UseLoginOptions = {}) {
     if (errors.email || errors.password) return;
 
     setSubmitting(true);
-    const result = await login({ ...credentials, email: credentials.email.trim() });
+    const result = await login(credentials);
     setSubmitting(false);
 
     if (!result.ok) {
-      setFormError(result.status === 401 ? 'Incorrect email or password' : result.error);
+      setFormError(result.error);
       return;
     }
     onSuccess?.(result.data);
