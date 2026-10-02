@@ -9,38 +9,67 @@ dist/
 web-build/
 expo-env.d.ts
 
-# Native
+# generated native folders (Continuous Native Generation — recreated by `npx expo prebuild` / `run:*`)
+/ios
+/android
+
+# Native build output
 .kotlin/
+.gradle/
+*.apk
+*.aab
+*.ipa
+*.app
+*.dSYM.zip
 *.orig.*
+
+# Signing keys & credentials — never commit
 *.jks
+*.keystore
+!debug.keystore
 *.p8
 *.p12
 *.key
+*.pem
 *.mobileprovision
+credentials.json
+
+# Environment variables (commit `.env.example` with placeholder values instead)
+.env
+.env.*
+!.env.example
 
 # Metro
 .metro-health-check*
 
-# debug
+# Logs & debug
+*.log
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
-.DS_Store
-*.pem
+# Testing
+coverage/
 
-# local env files
-.env*.local
-
-# typescript
+# Lint / TypeScript caches
+.eslintcache
 *.tsbuildinfo
 
-example
-
-# generated native folders
-/ios
-/android
+# Editors — keep shared VS Code project config, ignore everything else
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
 
 # Claude Code
 .claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+example
